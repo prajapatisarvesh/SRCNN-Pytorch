@@ -39,8 +39,8 @@ if __name__ == '__main__':
         if folder_dir not in os.listdir() and folder_dir[:-3] not in os.listdir():
             print("[+] Extracting to", folder_dir)
             try:
-                with zipfile.ZipFile(file_name, 'r') as zip:
-                    zip.extractall('.')
+                with zipfile.ZipFile(file_name, 'r') as zip_:
+                    zip_.extractall('.')
                 print("[+] Extraction Complete")
             except Exception as e:
                 print("[-] Error Extraction")
@@ -49,6 +49,7 @@ if __name__ == '__main__':
                 os.remove(file_name)
             except Exception as e:
                 pass
+
     for folder in os.listdir():
         cwd = os.getcwd()
         if 'div2k' in folder.lower():
@@ -66,7 +67,7 @@ if __name__ == '__main__':
                 else:
                     hr_train = sorted(os.listdir(f'{folder}'))
                     hr_train = [f'{cwd}/{folder}/{a}' for a in hr_train]
-    
+
     training_data = {**{"lr":"hr"}, **dict(zip(lr_train, hr_train))}
     valid_data = {**{"lr":"hr"}, **dict(zip(lr_valid, hr_valid))}
     with open('train.csv', 'w') as csv_:
