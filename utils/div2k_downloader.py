@@ -5,7 +5,7 @@ import requests
 import wget
 import csv
 import zipfile
-
+import cv2
 
 if __name__ == '__main__':
     os.chdir('..')
@@ -67,6 +67,14 @@ if __name__ == '__main__':
                 else:
                     hr_train = sorted(os.listdir(f'{folder}'))
                     hr_train = [f'{cwd}/{folder}/{a}' for a in hr_train]
+
+
+    hr = (2040,1356,3)
+    lr = (1020, 678, 3)
+    lr_valid = [a for a in lr_valid if cv2.imread(a).shape==lr]
+    lr_train = [a for a in lr_train if cv2.imread(a).shape==lr]
+    hr_train = [a for a in hr_train if cv2.imread(a).shape==hr]
+    hr_valid = [a for a in hr_valid if cv2.imread(a).shape==hr]
 
     training_data = {**{"lr":"hr"}, **dict(zip(lr_train, hr_train))}
     valid_data = {**{"lr":"hr"}, **dict(zip(lr_valid, hr_valid))}
