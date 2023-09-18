@@ -7,6 +7,7 @@ import pandas as pd
 import os
 # import io
 from skimage import io
+from abc import abstractmethod
 
 class BaseDataLoader(DataLoader):
     """
@@ -21,7 +22,7 @@ class BaseDataLoader(DataLoader):
     def __len__(self):
         return len(self.csv_dataframe)
     
-
+    @abstractmethod
     def __getitem__(self, idx):
         '''
         Just a basic structure to be implemented later
