@@ -33,7 +33,7 @@ if __name__ == '__main__':
     model = nn.DataParallel(model, device_ids=[0, 1])
     model.to(device)
 
-    model.load_state_dict(torch.load('checkpoints/model_weight_rgb.pth'))
+    # model.load_state_dict(torch.load('checkpoints/model_weight_rgb.pth'))
     criterion = PerceptualLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
     n_total_steps = len(dataloader)

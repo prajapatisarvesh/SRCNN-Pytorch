@@ -20,9 +20,7 @@ class PerceptualLoss(nn.Module):
         super().__init__()
         self.required_layers = {
             'features.8':'relu2_2',
-            # 'features.16':'relu3_4',
-            # 'features.25':'relu4_4',
-            # 'features.34':'relu5_4'
+            'features.25':'relu4_4',
             
         }
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -31,7 +29,7 @@ class PerceptualLoss(nn.Module):
         self.model2.requires_grad_ = False
         self.model2 = nn.DataParallel(self.model2, device_ids=[0, 1])
         self.model2.to(device)
-        self.lambda_0 = [1]
+        self.lambda_0 = [0.8,0.2]
         self.lambda_1 = 0.1
         self.lambda_2 = 1 - self.lambda_1
 
