@@ -34,7 +34,7 @@ if __name__ == '__main__':
     model.to(device)
 
     model.load_state_dict(torch.load('checkpoints/model_weight_rgb.pth'))
-    criterion = torch.nn.MSELoss()
+    criterion = PerceptualLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
     n_total_steps = len(dataloader)
     loss_counter = 0

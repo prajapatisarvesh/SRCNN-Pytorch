@@ -25,7 +25,7 @@ if __name__ == '__main__':
     model = SRCNN()
     model = nn.DataParallel(model, device_ids=[0, 1])
     model = model.to(device)
-    model.load_state_dict(torch.load('checkpoints/model_weight_27.pth'))
+    model.load_state_dict(torch.load('checkpoints/model_weight_rgb.pth'))
     model.eval()
     for i, data in enumerate(testloader):
         lr_image = data['lr_image'].to(device)
