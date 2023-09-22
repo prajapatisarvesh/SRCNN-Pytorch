@@ -31,8 +31,8 @@ class PerceptualLoss(nn.Module):
         self.model2.requires_grad_ = False
         self.model2 = nn.DataParallel(self.model2, device_ids=[0, 1])
         self.model2.to(device)
-        self.lambda_0 = [0.25,0.25,0.25,0.25]
-        self.lambda_1 = 0.55
+        self.lambda_0 = [0.5,0.5]
+        self.lambda_1 = 0.1
         self.lambda_2 = 1 - self.lambda_1
 
 

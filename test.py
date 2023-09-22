@@ -1,3 +1,13 @@
+'''
+LAST UPDATE: 2023.09.20
+Course: CS7180
+AUTHOR: Sarvesh Prajapati (SP), Abhinav Kumar (AK), Rupesh Pathak (RP)
+
+E-MAIL: prajapati.s@northeastern.edu, kumar.abhina@northeastern.edu, pathal.r@northeastern.edu
+DESCRIPTION: 
+
+
+'''
 import torch
 import numpy as np
 from data_loader import data_loaders
@@ -8,12 +18,14 @@ from model.model import SRCNN
 from model.loss import *
 
 if __name__ == '__main__':
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    test = data_loaders.Div2kDataLoader('/valid.csv', os.getcwd(), scale=2)
+    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+    test = data_loaders.Div2kDataLoader('/valid.csv', os.getcwd(), scale=4)
     testloader = DataLoader(test)
     criterion = torch.nn.MSELoss()
-    model = SRCNN().to(device)
-    model.load_state_dict(torch.load('checkpoints_mse/checkpoints/model_weight_40.pth'))
+    model = SRCNN()
+    model = nn.DataParallel(model, device_ids=[0, 1])
+    model = model.to(device)
+    model.load_state_dict(torch.load('checkpoints/model_weight_27.pth'))
     model.eval()
     for i, data in enumerate(testloader):
         lr_image = data['lr_image'].to(device)
