@@ -16,14 +16,18 @@ import zipfile
 import cv2
 
 if __name__ == '__main__':
+    ### Define which scale of dataset needs to be downloaded
     scale = "X4"
+    # change directory and make necessary folders
     os.chdir('..')
+    ### 
     if 'data' not in os.listdir():
         os.mkdir('data')
     os.chdir('data')
     if 'div2k' not in os.listdir():
         os.mkdir('div2k')
     os.chdir('div2k')
+    ## Urls that needs to be downloaded
     urls = [f'http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_LR_bicubic_{scale}.zip', \
             f'http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_bicubic_{scale}.zip', \
             f'http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_HR.zip', \
@@ -35,7 +39,7 @@ if __name__ == '__main__':
     lr_train = []
     hr_valid = []
     lr_valid = []
-
+    ## Iterate through url, download images and extract and cleanup
     for url in urls:
         file_name = url.split('/')[-1]
         folder_dir = file_name.split('.')[0]
@@ -58,7 +62,7 @@ if __name__ == '__main__':
                 os.remove(file_name)
             except Exception as e:
                 pass
-
+    ## get all images, sort them and create a dictionary with corresponding images
     for folder in os.listdir():
         cwd = os.getcwd()
         if 'div2k' in folder.lower():
@@ -77,14 +81,14 @@ if __name__ == '__main__':
                     hr_train = sorted(os.listdir(f'{folder}'))
                     hr_train = [f'{cwd}/{folder}/{a}' for a in hr_train]
 
-
+    ### Resize for easier batch creation
     hr = (2040,1356,3)
     lr = (510,339, 3)
     lr_valid = [a for a in lr_valid if cv2.imread(a).shape==lr]
     lr_train = [a for a in lr_train if cv2.imread(a).shape==lr]
     hr_train = [a for a in hr_train if cv2.imread(a).shape==hr]
     hr_valid = [a for a in hr_valid if cv2.imread(a).shape==hr]
-
+    ### Write CSV file, that can be parsed with dataloader
     training_data = {**{"lr":"hr"}, **dict(zip(lr_train, hr_train))}
     valid_data = {**{"lr":"hr"}, **dict(zip(lr_valid, hr_valid))}
     with open('train.csv', 'w') as csv_:
