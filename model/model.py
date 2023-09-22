@@ -1,3 +1,14 @@
+'''
+LAST UPDATE: 2023.09.20
+Course: CS7180
+AUTHOR: Sarvesh Prajapati (SP), Abhinav Kumar (AK), Rupesh Pathak (RP)
+
+E-MAIL: prajapati.s@northeastern.edu, kumar.abhina@northeastern.edu, pathal.r@northeastern.edu
+DESCRIPTION: 
+
+
+'''
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from base.base_model import BaseModel
@@ -16,4 +27,4 @@ class SRCNN(BaseModel):
         x = F.relu(self.conv1(x))
         x = F.relu(self.conv2(x))
         x = self.conv3(x)
-        return x.view((x.shape[0], x.shape[2], x.shape[3], x.shape[1]))
+        return torch.clip(x.view((x.shape[0], x.shape[2], x.shape[3], x.shape[1])), min=0.0, max=1.0)

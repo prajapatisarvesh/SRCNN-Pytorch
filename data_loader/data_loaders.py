@@ -1,3 +1,13 @@
+'''
+LAST UPDATE: 2023.09.20
+Course: CS7180
+AUTHOR: Sarvesh Prajapati (SP), Abhinav Kumar (AK), Rupesh Pathak (RP)
+
+E-MAIL: prajapati.s@northeastern.edu, kumar.abhina@northeastern.edu, pathal.r@northeastern.edu
+DESCRIPTION: 
+
+
+'''
 from base.base_data_loader import BaseDataLoader
 from torchvision import datasets, transforms
 from skimage import io
