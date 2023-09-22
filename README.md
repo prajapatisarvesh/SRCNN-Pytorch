@@ -7,6 +7,10 @@ This repository is part of CS7180 Advanced Perception course at Northeastern Uni
 
 <hr/>
 
+### Some random outputs:
+
+
+
 ### Training on Div2k
 
 Follow these steps to train on Div2k dataset.
@@ -36,4 +40,4 @@ python3 test.py # This should save output in output dir.
 
 <hr/>
 
-### 
+![Current Loss](figures/CLoss_TB.png) ![Loss](figures/Loss_TB.png)
